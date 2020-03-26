@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/LeoDalcegio/simple-url-shortener#readme",
   "dependencies": {
-    "ejs": "^3.0.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.9.6",
     "shortid": "^2.2.15"
