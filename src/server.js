@@ -1,19 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 const routes = require('./routes');
+const dotenv = require('dotenv')
 
 const app = express();
 
-mongoose.connect('mongodb+srv://dbUser-Leo:dbUser-leo@url-shortener-tmd3n.mongodb.net/test?retryWrites=true&w=majority', {
+dotenv.config()
+
+mongoose.connect(process.env.DB_CONNECT, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-});
+}),
+() => console.log('Connected to db!');
 
 app.use(cors());
 app.use(express.json());
+app.use(errors());
 app.use(express.urlencoded({ extended: false }))
 app.use(routes)
 
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 3000, () => console.log('Server Up and running'));

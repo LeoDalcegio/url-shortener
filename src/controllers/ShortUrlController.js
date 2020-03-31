@@ -1,4 +1,4 @@
-const ShortUrl = require('../models/shortUrl')
+const ShortUrl = require('../models/ShortUrl')
 
 module.exports = {
     async index(request, response){
