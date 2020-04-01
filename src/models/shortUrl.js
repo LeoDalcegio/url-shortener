@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const shortId = require('shortid');
+const mongoosePaginate = require('mongoose-paginate');
 
 const ShortUrlSchema = new mongoose.Schema({
     full: {
@@ -14,7 +14,17 @@ const ShortUrlSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0
-    }
-})
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    
+},{
+    timestamps: true
+});
+
+
+ShortUrlSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('ShortUrl', ShortUrlSchema);
