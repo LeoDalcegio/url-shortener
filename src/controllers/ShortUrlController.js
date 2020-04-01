@@ -20,7 +20,7 @@ module.exports = {
         shortUrl.clicks++;
 
         shortUrl.save()
-        
+
         return response.redirect(shortUrl.full);
     },
 
@@ -61,9 +61,9 @@ module.exports = {
         const shortUrl = await ShortUrl.findOne({ short: request.params.shortUrl })
 
         if(shortUrl){
-            return true;
+            return respose.send(true);
         }else{
-            return false;
+            return respose.send(false);
         }
 
     }
