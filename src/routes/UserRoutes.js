@@ -2,15 +2,15 @@ const express = require('express');
 const { celebrate, Segments, Joi } = require('celebrate');
 const verify = require('../utils/verifyToken');
 
-const UserController = require('../controllers/UserController');
+const UsersController = require('../controllers/UsersController');
 
 const userRoutes = express.Router();
 
-userRoutes.get('/', UserController.index);
+userRoutes.get('/', UsersController.index);
 
 userRoutes.get('/:id',celebrate({[Segments.PARAMS]: Joi.object({
     id: Joi.string().required()}),}), 
-    UserController.show
+    UsersController.show
 );
 
 userRoutes.put('/:id', celebrate({[Segments.BODY]: Joi.object({
@@ -26,13 +26,13 @@ userRoutes.put('/:id', celebrate({[Segments.BODY]: Joi.object({
         .required(),
     }),}), 
     verify,
-    UserController.update        
+    UsersController.update        
 );
 
 userRoutes.delete('/:id', celebrate({[Segments.PARAMS]: Joi.object({
     id: Joi.string().required()}),}), 
     verify, 
-    UserController.destroy
+    UsersController.destroy
 );
 
 module.exports = userRoutes;

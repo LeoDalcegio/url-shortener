@@ -3,8 +3,9 @@ const ShortUrl = require('../models/ShortUrl')
 module.exports = {
     async index(request, response){
         const { page = 1 } = request.query;
+        const { user } = request.query;
         
-        const shortUrls = await ShortUrl.paginate({ }, { 
+        const shortUrls = await ShortUrl.paginate({ user: user  }, { 
             page,
             limit: 20
         });
@@ -21,26 +22,20 @@ module.exports = {
 
         shortUrl.save()
 
-        return response.redirect(shortUrl.full);
+        return response.redirect(301, shortUrl.full);
     },
 
     async create(request, response){
 
-        if(await ShortUrl.findOne({ short: request.params.shortUrl })){
+        if(await ShortUrl.findOne({ short: request.body.short })){
             return response.status(409).send('Short url already exist');
         };
 
-        const shortUrl = {
+        const shortUrl = await ShortUrl.create({
             full: request.body.full,
             short: request.body.short,
             user: request.body.user_id ? request.body.user_id : null 
-        }
-
-        await ShortUrl.create(shortUrl);
-            
-        if(request.body.user_id){ 
-            await shortUrl.populate('user').execPopulate();
-        }
+        });
 
         return response.json(shortUrl);
     },
@@ -54,7 +49,7 @@ module.exports = {
     async destroy(request, response){
         await ShortUrl.findByIdAndRemove(request.params.id);
         
-        return response.send();
+        return response.sendStatus(200);
     },
 
     async chekIfShortUrlExists(request, respose){

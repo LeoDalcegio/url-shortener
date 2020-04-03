@@ -32,5 +32,27 @@ authRoutes.post('/login', celebrate({[Segments.BODY]: Joi.object({
     AuthController.login
 );
 
+authRoutes.post('/forgot-password', celebrate({[Segments.BODY]: Joi.object({
+    email: Joi.string()
+        .required() 
+        .email(),
+    }),}),
+    AuthController.forgotPassword
+);
+
+authRoutes.post('/reset-password', celebrate({[Segments.BODY]: Joi.object({
+    email: Joi.string()
+        .min(6) 
+        .required() 
+        .email(),
+    password: Joi.string()  
+        .min(6) 
+        .required(),
+    token: Joi.string()
+        .required()
+    }),}),
+    AuthController.resetPassword
+);
+
 
 module.exports = authRoutes;

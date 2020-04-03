@@ -6,7 +6,6 @@ module.exports = {
         const { page = 1 } = request.query;
         
         const users = await User.paginate({ }, { 
-            select: 'name email',
             page, 
             limit: 20
         });
@@ -15,9 +14,10 @@ module.exports = {
     },
 
     async show(request, response){
-        const user = await User.findById(request.params.id).select('name email');
+        const user = await User.findById(request.params.id);
 
-        if(!user) return response.status(404).send('User not found');
+        if(!user) 
+            return response.status(404).send('User not found');
         
         return response.json(user);
     },
@@ -25,16 +25,12 @@ module.exports = {
     async update(request, response){
         const user = await User.findByIdAndUpdate(request.params.id, request.body, { new: true });
         
-        return response.json({
-            'user_id': user._id,
-            'name': user.name,
-            'email': user.email
-        });
+        return response.json(user);
     },
 
     async destroy(request, response) {
         const { id } = request.params;
-        
+       
         try{
             await User.findByIdAndDelete(id);
     
@@ -43,6 +39,4 @@ module.exports = {
             return response.status(400).send(err)
         }
     },
-
-
 }

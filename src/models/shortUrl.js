@@ -24,7 +24,6 @@ const ShortUrlSchema = new mongoose.Schema({
     timestamps: true
 });
 
-
 ShortUrlSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('ShortUrl', ShortUrlSchema);

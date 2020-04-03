@@ -22,7 +22,7 @@ shortUrlRoutes.post('/shortUrl/user', celebrate({[Segments.BODY]: Joi.object({
         .required(),
     short: Joi.string()  
         .required(),
-    user: Joi.string()
+    user_id: Joi.string()
         .required()
     }),}),
     verify,
