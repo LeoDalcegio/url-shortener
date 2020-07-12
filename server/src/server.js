@@ -28,4 +28,4 @@ app.use('/users/auth',AuthRoutes)
 app.use(ShortUrlRoutes)
 app.use(errors());
 
-app.listen(process.env.PORT || 3000, () => console.log('Server Up and running'));
+app.listen(process.env.PORT || 3333, () => console.log('Server Up and running'));
